@@ -93,3 +93,43 @@ void Map::findAdjacents(City * temp) {
     }
   }
 }
+
+// Find shortest path between two cities, returns list of cities in order
+vector<City *> Map::shortestPath(City * start, City * dest){ 
+	vector<City *> shortPath;
+
+	return shortPath;
+}
+
+unsigned int Map::pathDistance(City * start, City * dest){
+	unsigned int dist = 0;
+	vector<City *> shortPath = shortestPath(start, dest);
+	// Takes two members of the path vector we got which should be adjacent if the order is correct
+	City * neighbor1 = shortPath.back(); 
+	shortPath.pop_back();
+	City * neighbor2;
+
+	// Iterates through all members, taking the distance between each adjacent City	and adding to the total distance
+	while(shortPath.size() != 0){ 
+		neighbor2 = shortPath.back();
+		shortPath.pop_back();
+		dist += edgeDistance(neighbor1, neighbor2);
+		neighbor1 = neighbor2;
+	}
+	return dist;
+}
+
+// Helper function~Calculates distance between two cities
+unsigned int Map::edgeDistance(City * start, City * dest){
+	unsigned int dist = 0;
+	if(start->getXCoor() == dest->getXCoor()){
+		dist = start->getYCoor() - dest->getYCoor();
+	} else if(start->getYCoor() == dest->getYCoor()){
+		dist = start->getYCoor() - dest->getYCoor();
+	}
+	// Takes absolute value because direction doesn't matter, distance is a scalar
+	if(dist < 0){
+		dist *= -1;
+	}
+	return dist;
+}
